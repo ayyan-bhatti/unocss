@@ -32,7 +32,7 @@ function negateMathFunction(value: string) {
   }
 }
 
-const negateFunctionBodyRE = /\b(hue-rotate)\s*(\(.*)/
+const negateFunctionBodyRE = /\b(hue-rotate|rotate[XYZ]|skew[XY])\s*(\(.*)/
 function negateFunctionBody(value: string) {
   const match = value.match(negateFunctionBodyRE)
   if (match) {

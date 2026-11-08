@@ -773,6 +773,39 @@ describe('preset-wind4', () => {
     expect(skipped).toContain(':where(*:is(nth)) &')
   })
 
+  it('negative skew and 3d rotate utilities', async () => {
+    const uno = await createGenerator({
+      presets: [
+        presetWind4({ preflights: { reset: false } }),
+      ],
+    })
+
+    const { getLayer } = await uno.generate([
+      '-skew-x-12',
+      '-skew-y-6',
+      '-skew-6',
+      '-skew-x--6',
+      '-skew-x-[10deg]',
+      '-rotate-x-45',
+      '-rotate-y-180',
+      '-rotate-z-[30deg]',
+      'hover:-skew-x-6',
+    ])
+
+    expect(getLayer('default')).toMatchInlineSnapshot(`
+      "/* layer: default */
+      .-rotate-x-45{--un-rotate-x:rotateX(-45deg);transform:var(--un-rotate-x) var(--un-rotate-y) var(--un-rotate-z) var(--un-skew-x) var(--un-skew-y);}
+      .-rotate-y-180{--un-rotate-y:rotateY(-180deg);transform:var(--un-rotate-x) var(--un-rotate-y) var(--un-rotate-z) var(--un-skew-x) var(--un-skew-y);}
+      .-rotate-z-\\[30deg\\]{--un-rotate-z:rotateZ(-30deg);transform:var(--un-rotate-x) var(--un-rotate-y) var(--un-rotate-z) var(--un-skew-x) var(--un-skew-y);}
+      .-skew-6{--un-skew-x:skewX(-6deg);--un-skew-y:skewY(-6deg);transform:var(--un-rotate-x) var(--un-rotate-y) var(--un-rotate-z) var(--un-skew-x) var(--un-skew-y);}
+      .-skew-x--6{--un-skew-x:skewX(6deg);transform:var(--un-rotate-x) var(--un-rotate-y) var(--un-rotate-z) var(--un-skew-x) var(--un-skew-y);}
+      .-skew-x-\\[10deg\\]{--un-skew-x:skewX(-10deg);transform:var(--un-rotate-x) var(--un-rotate-y) var(--un-rotate-z) var(--un-skew-x) var(--un-skew-y);}
+      .-skew-x-12{--un-skew-x:skewX(-12deg);transform:var(--un-rotate-x) var(--un-rotate-y) var(--un-rotate-z) var(--un-skew-x) var(--un-skew-y);}
+      .-skew-y-6{--un-skew-y:skewY(-6deg);transform:var(--un-rotate-x) var(--un-rotate-y) var(--un-rotate-z) var(--un-skew-x) var(--un-skew-y);}
+      .hover\\:-skew-x-6:hover{--un-skew-x:skewX(-6deg);transform:var(--un-rotate-x) var(--un-rotate-y) var(--un-rotate-z) var(--un-skew-x) var(--un-skew-y);}"
+    `)
+  })
+
   it('h-screen-* uses verticalBreakpoint', async () => {
     const uno = await createGenerator({
       presets: [

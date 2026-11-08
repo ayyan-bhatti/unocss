@@ -484,6 +484,13 @@ export const presetWind4Targets: string[] = [
   '-hue-rotate-90',
   '-hue-rotate--90',
   '-hue-rotate-[var(--for-hue,0.5turn)]',
+  '-rotate-x-45',
+  '-rotate-y-180',
+  '-rotate-z-[30deg]',
+  '-skew-6',
+  '-skew-x-12',
+  '-skew-y-6',
+  '-skew-x-[10deg]',
   'hover:animate-bounce',
 
   '-scroll-mb-px',
